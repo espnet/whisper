@@ -17,7 +17,7 @@ jobs:
           - python-version: '3.13'
             pytorch-version: 2.5.1
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Setup Miniforge
         uses: conda-incubator/setup-miniconda@v3
         with:
