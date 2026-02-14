@@ -21,7 +21,7 @@ def test_transcribe(model_name: str):
         temperature=0.0,
         word_timestamps=True,
         verbose=True,
-        fp16=False,  # Disable FP16 for testing to avoid potential issues on CPU
+        fp16=device == "cuda",  # Disable FP16 for testing to avoid potential issues on CPU
     )
     print(f"Transcription took {time() - start:.2f} seconds")
     assert result["language"] == "en"
