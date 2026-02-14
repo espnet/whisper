@@ -24,4 +24,3 @@ repos:
     hooks:
     -   id: isort
         exclude: ^(data|notebooks)
-  
