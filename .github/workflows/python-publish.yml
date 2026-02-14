@@ -15,7 +15,7 @@ jobs:
         text: ${{ github.event.head_commit.message }}
         regex: '^Release ([^ ]+)'
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
     - name: Install dependencies
