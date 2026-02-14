@@ -202,25 +202,27 @@ class Tokenizer:
         if self.language is None:
             raise ValueError("This tokenizer does not have language token configured")
 
-        additional_tokens = dict(
-            zip(
-                self.tokenizer.additional_special_tokens,
-                self.tokenizer.additional_special_tokens_ids,
-            )
-        )
         candidate = f"<|{self.language}|>"
-        if candidate in additional_tokens:
-            return additional_tokens[candidate]
+        # Use convert_tokens_to_ids instead of accessing additional_special_tokens attribute
+        token_id = self.tokenizer.convert_tokens_to_ids(candidate)
+
+        # Check if token was found (not converted to unknown token)
+        if (
+            token_id != self.tokenizer.unk_token_id
+            and candidate in self.tokenizer.get_vocab()
+        ):
+            return token_id
 
         raise KeyError(f"Language {self.language} not found in tokenizer.")
 
     @cached_property
     def all_language_tokens(self) -> Tuple[int]:
         result = []
-        for token, token_id in zip(
-            self.tokenizer.additional_special_tokens,
-            self.tokenizer.additional_special_tokens_ids,
-        ):
+        # Extract language tokens by iterating through all special token IDs
+        # and identifying which ones match the language token pattern
+        for token_id in self.tokenizer.all_special_ids:
+            # Convert ID back to token string
+            token = self.tokenizer.convert_ids_to_tokens(token_id)
             if token.strip("<|>") in LANGUAGES:
                 result.append(token_id)
         return tuple(result)
