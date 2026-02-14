@@ -6,8 +6,10 @@ from setuptools import find_packages, setup
 
 
 def read_version(fname="whisper/version.py"):
-    exec(compile(open(fname, encoding="utf-8").read(), fname, "exec"))
-    return locals()["__version__"]
+    namespace = {}
+    with open(fname, encoding="utf-8") as f:
+        exec(compile(f.read(), fname, "exec"), namespace)
+    return namespace["__version__"]
 
 
 def read_requirements(fname="requirements.txt"):
