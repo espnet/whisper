@@ -29,7 +29,7 @@ setup(
     readme="README.md",
     python_requires=">=3.10",
     author="OpenAI",
-    url="https://github.com/openai/whisper",
+    url="https://github.com/espnet/whisper",
     license="MIT",
     packages=find_packages(exclude=["tests*"]),
     install_requires=requirements + read_requirements(),

@@ -111,8 +111,10 @@ def transcribe(
         if torch.cuda.is_available():
             warnings.warn("Performing inference on CPU when CUDA is available")
         if dtype == torch.float16:
-            warnings.warn("FP16 is not supported on CPU; using FP32 instead")
-            dtype = torch.float32
+            warnings.warn(
+                "FP16 is supported on CPU, but with a slower performance; "
+                "We recommend using FP32 instead"
+            )
 
     if dtype == torch.float32:
         decode_options["fp16"] = False
