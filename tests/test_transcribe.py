@@ -5,6 +5,8 @@ import torch
 
 import whisper
 
+from time import time
+
 
 @pytest.mark.parametrize("model_name", whisper.available_models())
 def test_transcribe(model_name: str):
@@ -13,9 +15,16 @@ def test_transcribe(model_name: str):
     audio_path = os.path.join(os.path.dirname(__file__), "jfk.flac")
 
     language = "en" if model_name.endswith(".en") else None
+    start = time()
     result = model.transcribe(
-        audio_path, language=language, temperature=0.0, word_timestamps=True
+        audio_path,
+        language=language,
+        temperature=0.0,
+        word_timestamps=True,
+        verbose=True,
+        fp16=False,  # Disable FP16 for testing to avoid potential issues on CPU
     )
+    print(f"Transcription took {time() - start:.2f} seconds")
     assert result["language"] == "en"
     assert result["text"] == "".join([s["text"] for s in result["segments"]])
 
