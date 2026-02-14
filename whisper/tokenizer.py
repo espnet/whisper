@@ -207,7 +207,10 @@ class Tokenizer:
         token_id = self.tokenizer.convert_tokens_to_ids(candidate)
 
         # Check if token was found (not converted to unknown token)
-        if token_id != self.tokenizer.unk_token_id and candidate in self.tokenizer.get_vocab():
+        if (
+            token_id != self.tokenizer.unk_token_id
+            and candidate in self.tokenizer.get_vocab()
+        ):
             return token_id
 
         raise KeyError(f"Language {self.language} not found in tokenizer.")

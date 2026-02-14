@@ -1,11 +1,10 @@
 import os
+from time import time
 
 import pytest
 import torch
 
 import whisper
-
-from time import time
 
 
 @pytest.mark.parametrize("model_name", whisper.available_models())
