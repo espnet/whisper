@@ -24,7 +24,7 @@ jobs:
         pip install setuptools wheel twine
     - name: Release
       if: ${{ steps.regex-match.outputs.match != '' }}
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         tag_name: v${{ steps.regex-match.outputs.group1 }}
     - name: Build and publish
